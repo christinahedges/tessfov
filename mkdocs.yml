@@ -1,0 +1,33 @@
+site_name: tessFOV
+nav:
+    - Home : README.md
+    - API: api.md
+theme:
+  name: "material"
+  icon:
+    logo: material/palette-swatch-outline
+  palette:
+    scheme: default
+    primary: blue grey
+    accent: blue
+repo_url: https://github.com/christinahedges/tessfov
+plugins:
+  - include-markdown
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          selection:
+            docstring_style: "numpy"
+          rendering:
+            show_source: false
+      custom_templates: templates
+      watch:
+        - src/tessfov
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
