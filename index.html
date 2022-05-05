@@ -217,114 +217,9 @@
         
       
       
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Home
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
       <a href="." class="md-nav__link md-nav__link--active">
         Home
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tessfov-functions" class="md-nav__link">
-    tessFOV Functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-to-matplotlib-subplot" class="md-nav__link">
-    Adding to matplotlib subplot
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-to-matplotlib-map-projections" class="md-nav__link">
-    Adding to matplotlib map projections
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples_2" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-one-ccd" class="md-nav__link">
-    Adding one CCD
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gotchas" class="md-nav__link">
-    Gotchas
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
       
     </li>
   
@@ -365,95 +260,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#tessfov-functions" class="md-nav__link">
-    tessFOV Functions
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-to-matplotlib-subplot" class="md-nav__link">
-    Adding to matplotlib subplot
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples_1" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-to-matplotlib-map-projections" class="md-nav__link">
-    Adding to matplotlib map projections
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#examples_2" class="md-nav__link">
-    Examples
-  </a>
-  
-    <nav class="md-nav" aria-label="Examples">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#adding-one-ccd" class="md-nav__link">
-    Adding one CCD
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gotchas" class="md-nav__link">
-    Gotchas
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#installation" class="md-nav__link">
-    Installation
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -473,6 +279,8 @@
 <p><a href="https://github.com/christinahedges/tessfov/actions/workflows/tests.yml"><img src="https://github.com/christinahedges/tessfov/workflows/pytest/badge.svg" alt="Test status"/></a> <a href="https://christinahedges.github.io/tessfov"><img alt="Generic badge" src="https://img.shields.io/badge/documentation-live-blue.svg" /></a></p>
 <h1 id="tessfov">tessFOV</h1>
 <p><code>tessFOV</code> will plot the footprint of NASA's TESS Spacecraft pointings on your existing <code>matplotlib.pyplot.Axes</code> objects. <code>tessFOV</code> uses the <a href="https://github.com/christopherburke/tess-point"><code>tess-point</code></a> package to find the edges of the CCDs for any given pointing, and provides user friendly functions for plotting these footprints.</p>
+<h1 id="requirements">Requirements</h1>
+<p><code>tessFOV</code> requires Python 3.8 or higher. The full list of module requirements can be found in the <code>pyproject.toml</code> file of this module.</p>
 <h2 id="tessfov-functions">tessFOV Functions</h2>
 <p><code>tessFOV</code> has the following functions available:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>add_tessfov_outline: Adds outlines for a given sector, camera, CCD
