@@ -1,3 +1,5 @@
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -9,6 +11,14 @@ from tessfov import (
     add_tessfov_text,
     get_edges,
 )
+
+
+def is_action():
+    try:
+        os.environ["GITHUB_ACTIONS"]
+        return True
+    except KeyError:
+        return False
 
 
 def test_version():
@@ -27,29 +37,30 @@ def test_edges():
 
 
 def test_plots():
-    dir = "/".join(PACKAGEDIR.split("/")[:-2])
-    with plt.style.context("seaborn-white"):
-        fig = plt.figure(dpi=150)
-        ax = plt.subplot(111, projection="hammer")
-        add_tessfov_shade(
-            ax, sector=np.arange(56, 60), unit="rad", wrap_at=180, rasterized=True
-        )
-        ax.set(xlabel="RA", ylabel="Dec")
-        ax.grid(True, ls="--")
-        fig.savefig(f"{dir}/docs/projection.png", bbox_inches="tight")
-        plt.close(fig)
+    if not is_action():
+        dir = "/".join(PACKAGEDIR.split("/")[:-2])
+        with plt.style.context("seaborn-white"):
+            fig = plt.figure(dpi=150)
+            ax = plt.subplot(111, projection="hammer")
+            add_tessfov_shade(
+                ax, sector=np.arange(56, 60), unit="rad", wrap_at=180, rasterized=True
+            )
+            ax.set(xlabel="RA", ylabel="Dec")
+            ax.grid(True, ls="--")
+            fig.savefig(f"{dir}/docs/projection.png", bbox_inches="tight")
+            plt.close(fig)
 
-        fig = plt.figure(dpi=150)
-        ax = plt.subplot(111)
-        ax.set(xlabel="RA", ylabel="Dec", xlim=(0, 360), ylim=(-90, 90))
-        add_tessfov_outline(ax, sector=np.arange(1, 14, 3))
-        fig.savefig(f"{dir}/docs/regular.png", bbox_inches="tight")
-        plt.close(fig)
+            fig = plt.figure(dpi=150)
+            ax = plt.subplot(111)
+            ax.set(xlabel="RA", ylabel="Dec", xlim=(0, 360), ylim=(-90, 90))
+            add_tessfov_outline(ax, sector=np.arange(1, 14, 3))
+            fig.savefig(f"{dir}/docs/regular.png", bbox_inches="tight")
+            plt.close(fig)
 
-        fig = plt.figure(dpi=150)
-        ax = plt.subplot(111)
-        ax.set(xlabel="RA", ylabel="Dec", xlim=(330, 360), ylim=(-40, 0))
-        add_tessfov_outline(ax, sector=2, camera=1, ccd=4, color="grey", ls="--")
-        add_tessfov_text(ax, sector=2, camera=1, ccd=4, color="grey", fontsize=12)
-        fig.savefig(f"{dir}/docs/zoom.png", bbox_inches="tight")
-        plt.close(fig)
+            fig = plt.figure(dpi=150)
+            ax = plt.subplot(111)
+            ax.set(xlabel="RA", ylabel="Dec", xlim=(330, 360), ylim=(-40, 0))
+            add_tessfov_outline(ax, sector=2, camera=1, ccd=4, color="grey", ls="--")
+            add_tessfov_text(ax, sector=2, camera=1, ccd=4, color="grey", fontsize=12)
+            fig.savefig(f"{dir}/docs/zoom.png", bbox_inches="tight")
+            plt.close(fig)
