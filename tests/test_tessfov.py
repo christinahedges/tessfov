@@ -22,7 +22,7 @@ def is_action():
 
 
 def test_version():
-    assert __version__ == "0.1.1"
+    assert __version__ == "0.1.2"
 
 
 def test_edges():
