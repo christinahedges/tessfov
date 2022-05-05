@@ -17,10 +17,10 @@ def footprint(npoints=5):
     """Gets the column and row points for CCD edges"""
     column = np.hstack(
         [
-            np.zeros(npoints) + 45,
-            np.linspace(0, 2048, npoints) + 45,
-            np.linspace(0, 2048, npoints) + 45,
-            np.ones(npoints) * 2048 + 45,
+            np.zeros(npoints),
+            np.linspace(0, 2048, npoints),
+            np.linspace(0, 2048, npoints),
+            np.ones(npoints) * 2048,
         ]
     )
     row = np.hstack(
