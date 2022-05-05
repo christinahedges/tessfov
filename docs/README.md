@@ -4,6 +4,9 @@
 
 `tessFOV` will plot the footprint of NASA's TESS Spacecraft pointings on your existing `matplotlib.pyplot.Axes` objects. `tessFOV` uses the [`tess-point`](https://github.com/christopherburke/tess-point) package to find the edges of the CCDs for any given pointing, and provides user friendly functions for plotting these footprints.
 
+# Requirements
+
+`tessFOV` requires Python 3.8 or higher. The full list of module requirements can be found in the `pyproject.toml` file of this module.
 
 ## tessFOV Functions
 
