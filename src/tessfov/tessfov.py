@@ -253,7 +253,7 @@ def add_tessfov_text(
         ax.text(
             patch[0].mean(),
             patch[1].mean(),
-            f"Sector {0}\nCam {1}\nCCD {2}".format(label),
+            f"Sector {label[0]}\nCam {label[1]}\nCCD {label[2]}",
             ha=ha,
             va=va,
             color=color,
