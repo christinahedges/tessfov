@@ -25,5 +25,5 @@ jobs:
       run: |
         make pytest
     - name: Deploy website
-          run: |
-            make deploy
+      run: |
+        make deploy
