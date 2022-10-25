@@ -4,7 +4,7 @@ import astropy.units as u
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from astropy.coordinates import Angle
+from astropy.coordinates import Angle, cartesian_to_spherical
 from numpy import typing as npt
 from tess_stars2px import Levine_FPG
 
@@ -308,3 +308,84 @@ def add_tessfov_shade(
             np.vstack([patch[0], patch[1]]).T, color=color, alpha=0.15, lw=lw, **kwargs
         )
         ax.add_patch(poly)
+
+
+def fibonacci_sphere(samples: int = 20000) -> List[npt.NDArray[float]]:
+    """Roughly evenly spaces points on a sphere
+
+    Parameters:
+    ----------
+    samples: int
+        Number of points to put on a sphere
+
+    Returns:
+    -------
+    vec: np.ndarray shape 3 x len(samples)
+        The cartesian vector of points on a sphere
+    """
+    points = []
+    phi = np.pi * (3.0 - np.sqrt(5.0))  # golden angle in radians
+    for i in range(samples):
+        y = 1 - (i / float(samples - 1)) * 2  # y goes from 1 to -1
+        radius = np.sqrt(1 - y * y)  # radius at y
+        theta = phi * i  # golden angle increment
+        x = np.cos(theta) * radius
+        z = np.sin(theta) * radius
+        points.append((x, y, z))
+    return np.asarray(points)
+
+
+def get_completeness(
+    sectors: Union[List[int], npt.NDArray] = [1], npoints: int = 100000
+) -> List[npt.NDArray[float]]:
+    """Returns sky completeness of input sectors for NASA TESS.
+
+    Will evenly distribute points in RA and Dec and then calculate which points are observed
+    in a given list of sectors. Returns an array of booleans for each input sector with
+    True/False stating whether each point is observed.
+
+    Parameters:
+    ----------
+    sectors: list or np.ndarray
+        The sectors at which to calculate the completeness
+    npoints: int
+        Number of points to put on a sphere
+
+    Returns:
+    -------
+    ra: np.ndarray
+        The evenly spaced RA locations, shape 1 x npoints
+    dec: np.ndarray
+        The evenly spaced Dec locations, shape 1 x npoints
+    onsilicon: np.ndarray
+        Array of booleans, with shape nsectors x npoints.
+        True where any point is observed in a given sector.
+    """
+    # evenly spaced RA and Dec
+    a = fibonacci_sphere(samples=npoints)
+    lat, lng = cartesian_to_spherical(*a.T)[1:]
+    ras, decs = lng.to(u.deg).value, lat.to(u.deg).value
+
+    onsilicon = np.zeros((len(sectors), len(ras)), bool)
+    for ldx, sdx in enumerate(sectors):
+        l = Levine_FPG(np.array([TPARAMS.ra[sdx], TPARAMS.dec[sdx], TPARAMS.roll[sdx]]))
+        vecs = np.asarray(l.sphereToCart(ras, decs))
+        camVecs = np.matmul(l.rmat4, vecs)
+        # carttosphere
+        norm = np.sum(camVecs**2, axis=1) ** 0.5
+        lat = np.arcsin(camVecs[:, 2] / norm)
+        lng = np.arctan2(camVecs[:, 1], camVecs[:, 0])
+        lng = np.mod(lng, 2.0 * np.pi)
+        lng, lat = np.rad2deg(lng), np.rad2deg(lat)
+
+        def infov(lng, lat):
+            vec = np.asarray(l.sphereToCart(lng, lat))
+            vec /= np.sum(vec**2, axis=0) ** 0.5
+            xlen = np.abs(np.arctan(vec[0] / vec[2]))
+            ylen = np.abs(np.arctan(vec[1] / vec[2]))
+            infov = (xlen <= np.deg2rad(12.5)) & (ylen <= np.deg2rad(12.5))
+            infov *= lat > 70
+            return infov
+
+        onsilicon[ldx] = infov(lng, lat).any(axis=0)
+    return ras, decs, onsilicon

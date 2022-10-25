@@ -86,3 +86,16 @@ You can install `tessFOV` using pip:
 ```
 pip install tessfov --upgrade
 ```
+
+## Looking at TESS Completeness
+
+You can use this tool to understand maps of completeness across the sky observed by TESS. To make a dataset of the completeness you can use the `get_completeness` function:
+
+```
+sectors = np.arange(1, 58)
+ra, dec, completeness_by_sector = get_completeness(sectors)
+```
+
+`completeness_by_sector` is then a boolean array with shape *Number of Sectors* x *Number of samples*. The array is True where a point in the sky would fall on the detector in a given sector. Using this dataset you can create maps of the sky that look like this:
+
+![TESS Sky Completeness](completeness1.png)

@@ -4,7 +4,7 @@ from __future__ import absolute_import  # noqa
 
 import os  # noqa
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 PACKAGEDIR = os.path.abspath(os.path.dirname(__file__))
 
 
