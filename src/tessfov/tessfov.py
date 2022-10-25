@@ -310,9 +310,9 @@ def add_tessfov_shade(
         ax.add_patch(poly)
 
 
-def fibonacci_sphere(samples: int =20000) -> List[npt.NDArray[float]]:
+def fibonacci_sphere(samples: int = 20000) -> List[npt.NDArray[float]]:
     """Roughly evenly spaces points on a sphere
-    
+
     Parameters:
     ----------
     samples: int
@@ -324,7 +324,7 @@ def fibonacci_sphere(samples: int =20000) -> List[npt.NDArray[float]]:
         The cartesian vector of points on a sphere
     """
     points = []
-    phi = np.pi * (3. - np.sqrt(5.))  # golden angle in radians
+    phi = np.pi * (3.0 - np.sqrt(5.0))  # golden angle in radians
     for i in range(samples):
         y = 1 - (i / float(samples - 1)) * 2  # y goes from 1 to -1
         radius = np.sqrt(1 - y * y)  # radius at y
@@ -334,12 +334,15 @@ def fibonacci_sphere(samples: int =20000) -> List[npt.NDArray[float]]:
         points.append((x, y, z))
     return np.asarray(points)
 
-def get_completeness(sectors: Union[List[int], npt.NDArray]=[1], npoints: int=100000)-> List[npt.NDArray[float]]:
+
+def get_completeness(
+    sectors: Union[List[int], npt.NDArray] = [1], npoints: int = 100000
+) -> List[npt.NDArray[float]]:
     """Returns sky completeness of input sectors for NASA TESS.
-    
+
     Will evenly distribute points in RA and Dec and then calculate which points are observed
     in a given list of sectors. Returns an array of booleans for each input sector with
-    True/False stating whether each point is observed. 
+    True/False stating whether each point is observed.
 
     Parameters:
     ----------
@@ -369,16 +372,15 @@ def get_completeness(sectors: Union[List[int], npt.NDArray]=[1], npoints: int=10
         vecs = np.asarray(l.sphereToCart(ras, decs))
         camVecs = np.matmul(l.rmat4, vecs)
         # carttosphere
-        norm = np.sum(camVecs**2, axis=1)**0.5
+        norm = np.sum(camVecs**2, axis=1) ** 0.5
         lat = np.arcsin(camVecs[:, 2] / norm)
         lng = np.arctan2(camVecs[:, 1], camVecs[:, 0])
         lng = np.mod(lng, 2.0 * np.pi)
         lng, lat = np.rad2deg(lng), np.rad2deg(lat)
 
-
         def infov(lng, lat):
             vec = np.asarray(l.sphereToCart(lng, lat))
-            vec /= np.sum(vec**2, axis=0)**0.5
+            vec /= np.sum(vec**2, axis=0) ** 0.5
             xlen = np.abs(np.arctan(vec[0] / vec[2]))
             ylen = np.abs(np.arctan(vec[1] / vec[2]))
             infov = (xlen <= np.deg2rad(12.5)) & (ylen <= np.deg2rad(12.5))
