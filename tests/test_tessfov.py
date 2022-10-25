@@ -3,9 +3,15 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
-from tessfov import (PACKAGEDIR, __version__, add_tessfov_outline,
-                     add_tessfov_shade, add_tessfov_text, get_completeness,
-                     get_edges)
+from tessfov import (
+    PACKAGEDIR,
+    __version__,
+    add_tessfov_outline,
+    add_tessfov_shade,
+    add_tessfov_text,
+    get_completeness,
+    get_edges,
+)
 
 plt.style.use("seaborn-white")
 
